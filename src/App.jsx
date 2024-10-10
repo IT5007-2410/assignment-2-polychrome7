@@ -75,13 +75,67 @@ class Add extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     /*Q4. Fetch the passenger details from the add form and call bookTraveller()*/
+    const newTraveller = {
+      id: Date.now(), // A unique ID for the traveller
+      name: this.state.name,
+      phone: this.state.phone,
+      email: this.state.email,
+      seatNumber: parseInt(this.state.seatNumber, 10),
+      travelClass: this.state.travelClass,
+      bookingTime: new Date(),
+  };
+
+  this.props.bookTraveller(newTraveller); // Pass the new traveller to the parent function
+    
+    // Reset form fields
+    this.setState({
+      name: '',
+      phone: '',
+      email: '',
+      seatNumber: '',
+      travelClass: '',
+    });
   }
 
   render() {
     return (
       <form name="addTraveller" onSubmit={this.handleSubmit}>
-	    {/*Q4. Placeholder to enter passenger details. Below code is just an example.*/}
-        <input type="text" name="travellername" placeholder="Name" />
+	      {/*Q4. Placeholder to enter passenger details. Below code is just an example.*/}
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={this.state.name}
+          onChange={this.handleInputChange}
+        />
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          value={this.state.phone}
+          onChange={this.handleInputChange}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={this.state.email}
+          onChange={this.handleInputChange}
+        />
+        <input
+          type="number"
+          name="seatNumber"
+          placeholder="Seat Number"
+          value={this.state.seatNumber}
+          onChange={this.handleInputChange}
+        />
+        <input
+          type="text"
+          name="travelClass"
+          placeholder="Travel Class"
+          value={this.state.travelClass}
+          onChange={this.handleInputChange}
+        />
         <button>Add</button>
       </form>
     );
@@ -147,6 +201,9 @@ class TicketToRide extends React.Component {
 
   bookTraveller(passenger) {
 	    /*Q4. Write code to add a passenger to the traveller state variable.*/
+      this.setState(prevState => ({
+        travellers: [...prevState.travellers, newTraveller],
+      }));
   }
 
   deleteTraveller(passenger) {
