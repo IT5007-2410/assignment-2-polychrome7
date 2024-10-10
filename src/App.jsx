@@ -152,18 +152,11 @@ class TicketToRide extends React.Component {
 
       {/* Q2: Conditional Rendering Based on `selector` */}
       <div>
-          {/* Q6: Visual Representation of Free Seats in Homepage */}
-          {this.state.selector === 1 && <Homepage />}  
-
-          {/* Q3: Display Travellers Component */}
-          {this.state.selector === 3 && <Display travellers={this.state.travellers} />} 
-
-          {/* Q4: Add Traveller Component */}
-          {this.state.selector === 2 && <Add bookTraveller={this.bookTraveller} />} 
-
-          {/* Q5: Delete Traveller Component */}
-          {this.state.selector === 4 && <Delete deleteTraveller={this.deleteTraveller} />} 
-      </div>
+        {this.state.selector === 1 && <Homepage />}  {/* Homepage Component */}
+        {this.state.selector === 2 && <Add bookTraveller={this.bookTraveller} />}  {/* Add Component */}
+        {this.state.selector === 3 && <Display travellers={this.state.travellers} />}  {/* Display Component */}
+        {this.state.selector === 4 && <Delete deleteTraveller={this.deleteTraveller} />}  {/* Delete Component */}
+     </div>
 	<div>
 		{/*Only one of the below four divisions is rendered based on the button clicked by the user.*/}
 		{/*Q2 and Q6. Code to call Instance that draws Homepage. Homepage shows Visual Representation of free seats.*/}
