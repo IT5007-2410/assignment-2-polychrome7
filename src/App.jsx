@@ -179,7 +179,6 @@ class Homepage extends React.Component {
   /*Q6. Visual Representation of reserved/unreserved tickets.*/
 	renderSeatMap() {
     const totalSeats = 10;
-    //const bookedSeats = this.props.travellers.length;
     const bookedSeats = this.props.travellers ? this.props.travellers.length : 0;
     const freeSeats = totalSeats - bookedSeats;
 
