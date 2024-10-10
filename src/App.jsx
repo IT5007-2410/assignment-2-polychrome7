@@ -175,12 +175,35 @@ class Homepage extends React.Component {
 	constructor() {
 	super();
 	}
-	render(){
-	return (
-	<div>
-		{/*Q2. Placeholder for Homepage code that shows free seats visually.*/}
-	</div>);
-	}
+
+  /*Q6. Visual Representation of reserved/unreserved tickets.*/
+	renderSeatMap() {
+    const totalSeats = 10;
+    const bookedSeats = this.props.travellers.length;
+    const freeSeats = totalSeats - bookedSeats;
+
+    return (
+      <div>
+        <p>Total Seats: {totalSeats}</p>
+        <p>Free Seats: {freeSeats}</p>
+        <div className="seat-map">
+          {Array.from({ length: totalSeats }, (_, index) => (
+            <div
+              key={index}
+              className={index < bookedSeats ? "booked-seat" : "free-seat"}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+	 render(){
+	 return (
+	 <div>
+		  {/*Q2. Placeholder for Homepage code that shows free seats visually.*/}
+      {this.renderSeatMap()}
+	 </div>);
+	 }
 }
 class TicketToRide extends React.Component {
   constructor() {
