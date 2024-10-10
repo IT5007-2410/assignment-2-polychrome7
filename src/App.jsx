@@ -111,6 +111,7 @@ class TicketToRide extends React.Component {
   constructor() {
     super();
     this.state = { travellers: [], selector: 1};
+    this.setSelector = this.setSelector.bind(this);
     this.bookTraveller = this.bookTraveller.bind(this);
     this.deleteTraveller = this.deleteTraveller.bind(this);
   }
@@ -118,6 +119,7 @@ class TicketToRide extends React.Component {
   setSelector(value)
   {
   	/*Q2. Function to set the value of component selector variable based on user's button click.*/
+    this.setState({ selector: value });
   }
   componentDidMount() {
     this.loadData();
@@ -140,12 +142,32 @@ class TicketToRide extends React.Component {
     return (
       <div>
         <h1>Ticket To Ride</h1>
-	<div>
-	    {/*Q2. Code for Navigation bar. Use basic buttons to create a nav bar. Use states to manage selection.*/}
-	</div>
+        {/*Q2. Code for Navigation bar. Use basic buttons to create a nav bar. Use states to manage selection.*/}
+	    <div>
+      <button onClick={() => this.setSelector(1)}>Homepage</button>
+      <button onClick={() => this.setSelector(2)}>Add Traveller</button>
+      <button onClick={() => this.setSelector(3)}>Display Travellers</button>
+      <button onClick={() => this.setSelector(4)}>Delete Traveller</button>
+	    </div>
+
+      {/* Q2: Conditional Rendering Based on `selector` */}
+      <div>
+          {/* Q6: Visual Representation of Free Seats in Homepage */}
+          {this.state.selector === 1 && <Homepage />}  
+
+          {/* Q3: Display Travellers Component */}
+          {this.state.selector === 3 && <Display travellers={this.state.travellers} />} 
+
+          {/* Q4: Add Traveller Component */}
+          {this.state.selector === 2 && <Add bookTraveller={this.bookTraveller} />} 
+
+          {/* Q5: Delete Traveller Component */}
+          {this.state.selector === 4 && <Delete deleteTraveller={this.deleteTraveller} />} 
+      </div>
 	<div>
 		{/*Only one of the below four divisions is rendered based on the button clicked by the user.*/}
 		{/*Q2 and Q6. Code to call Instance that draws Homepage. Homepage shows Visual Representation of free seats.*/}
+
 		{/*Q3. Code to call component that Displays Travellers.*/}
 		
 		{/*Q4. Code to call the component that adds a traveller.*/}
