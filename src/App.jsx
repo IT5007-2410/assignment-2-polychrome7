@@ -27,7 +27,7 @@ function TravellerRow(props) {
   return (
     <tr>
 	  {/*Q3. Placeholder for rendering one row of a table with required traveller attribute values.*/}
-    <td>{id}</td>
+      <td>{id}</td>
       <td>{name}</td>
       <td>{phone}</td>
       <td>{email}</td>
@@ -69,11 +69,30 @@ function Display(props) {
 class Add extends React.Component {
   constructor() {
     super();
+    this.state = {
+      name: '',        // Initialize as empty string
+      phone: '',       // Initialize as empty string
+      email: '',       // Initialize as empty string
+      seatNumber: '',  // Initialize as empty string
+      travelClass: '', // Initialize as empty string
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
+
+    if (!this.state.name || !this.state.phone || !this.state.email || !this.state.seatNumber || !this.state.travelClass) {
+      alert("Please fill in all the fields.");
+      return;
+    }
+
     /*Q4. Fetch the passenger details from the add form and call bookTraveller()*/
     const newTraveller = {
       id: Date.now(), // A unique ID for the traveller
@@ -146,10 +165,24 @@ class Add extends React.Component {
 class Delete extends React.Component {
   constructor() {
     super();
+    this.state = { name: '' };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
+
+  handleInputChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
+
+    if (!this.state.name) {
+      alert("Please enter a name to delete.");
+      return;
+    }
+
     /*Q5. Fetch the passenger details from the deletion form and call deleteTraveller()*/
     this.props.deleteTraveller(this.state.name);
     this.setState({ name: '' }); 
@@ -161,23 +194,31 @@ class Delete extends React.Component {
       <input
         type="text"
         name="name"
-        placeholder="Name"
+        placeholder="Enter Name to Delete"
         value={this.state.name}
         onChange={this.handleInputChange}
       />
-      <button>Delete</button>
+      <button type="submit">Delete</button>
       </form>
     );
   }
 }
+
+//const testTravellers = [
+  //{ id: 1, name: 'Test1', seatNumber: 1 },
+  //{ id: 2, name: 'Test2', seatNumber: 2 }
+//];
 
 class Homepage extends React.Component {
 
   /*Q6. Visual Representation of reserved/unreserved tickets.*/
   renderSeatMap() {
     const totalSeats = 10;
+    //const bookedSeats = testTravellers.length;
     const bookedSeats = this.props.travellers ? this.props.travellers.length : 0;
     const freeSeats = totalSeats - bookedSeats;
+
+    console.log("Travellers:", this.props.travellers);
 
     return (
       <div>
@@ -187,9 +228,21 @@ class Homepage extends React.Component {
           {Array.from({ length: totalSeats }, (_, index) => (
             <div
               key={index}
-              className={index < bookedSeats ? "booked-seat" : "free-seat"}
+              className={`seat ${index < bookedSeats ? "booked-seat" : "free-seat"}`}
             />
           ))}
+        </div>
+
+        {/* Legend for the seat colors */}
+        <div className="legend">
+          <div>
+            <div className="color-box" style={{ backgroundColor: "grey" }}></div>
+            <span>Booked Seat</span>
+          </div>
+          <div>
+            <div className="color-box" style={{ backgroundColor: "green" }}></div>
+            <span>Free Seat</span>
+          </div>
         </div>
       </div>
     );
@@ -214,8 +267,7 @@ class TicketToRide extends React.Component {
     this.deleteTraveller = this.deleteTraveller.bind(this);
   }
 
-  setSelector(value)
-  {
+  setSelector(value){
   	/*Q2. Function to set the value of component selector variable based on user's button click.*/
     this.setState({ selector: value });
   }
@@ -236,41 +288,34 @@ class TicketToRide extends React.Component {
       }));
   }
 
-  deleteTraveller(passenger) {
-	  /*Q5. Write code to delete a passenger from the traveller state variable.*/
+
+  deleteTraveller(passengerName) {
+    /*Q5. Write code to delete a passenger from the traveller state variable.*/
     this.setState(prevState => ({
-      travellers: prevState.travellers.filter(traveller => traveller.name !== passenger),
+      travellers: prevState.travellers.filter(traveller => traveller.name !== passengerName),
     }));
   }
+
   render() {
     return (
       <div>
         <h1>Ticket To Ride</h1>
         {/*Q2. Code for Navigation bar. Use basic buttons to create a nav bar. Use states to manage selection.*/}
-	    <div>
-      <button onClick={() => this.setSelector(1)}>Homepage</button>
-      <button onClick={() => this.setSelector(2)}>Add Traveller</button>
-      <button onClick={() => this.setSelector(3)}>Display Travellers</button>
-      <button onClick={() => this.setSelector(4)}>Delete Traveller</button>
-	    </div>
+	      <div>
+          <button onClick={() => this.setSelector(1)}>Homepage</button>
+          <button onClick={() => this.setSelector(2)}>Add Traveller</button>
+          <button onClick={() => this.setSelector(3)}>Display Travellers</button>
+          <button onClick={() => this.setSelector(4)}>Delete Traveller</button>
+	      </div>
 
-      {/* Q2: Conditional Rendering Based on `selector` */}
-      <div>
-        {this.state.selector === 1 && <Homepage travellers={this.state.travellers} />}  {/* Homepage Component */}
-        {this.state.selector === 2 && <Add bookTraveller={this.bookTraveller} />}  {/* Add Component */}
-        {this.state.selector === 3 && <Display travellers={this.state.travellers} />}  {/* Display Component */}
-        {this.state.selector === 4 && <Delete deleteTraveller={this.deleteTraveller} />}  {/* Delete Component */}
+        {/* Q2: Conditional Rendering Based on `selector` */}
+        <div>
+          {this.state.selector === 1 && <Homepage travellers={this.state.travellers} />}  {/* Homepage Component */}
+          {this.state.selector === 2 && <Add bookTraveller={this.bookTraveller} />}  {/* Add Component */}
+          {this.state.selector === 3 && <Display travellers={this.state.travellers} />}  {/* Display Component */}
+          {this.state.selector === 4 && <Delete deleteTraveller={this.deleteTraveller} />}  {/* Delete Component */}
+       </div>
      </div>
-	<div>
-		{/*Only one of the below four divisions is rendered based on the button clicked by the user.*/}
-		{/*Q2 and Q6. Code to call Instance that draws Homepage. Homepage shows Visual Representation of free seats.*/}
-
-		{/*Q3. Code to call component that Displays Travellers.*/}
-		
-		{/*Q4. Code to call the component that adds a traveller.*/}
-		{/*Q5. Code to call the component that deletes a traveller based on a given attribute.*/}
-	</div>
-      </div>
     );
   }
 }
