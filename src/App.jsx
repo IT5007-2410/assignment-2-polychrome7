@@ -233,14 +233,14 @@ class TicketToRide extends React.Component {
   bookTraveller(passenger) {
 	    /*Q4. Write code to add a passenger to the traveller state variable.*/
       this.setState(prevState => ({
-        travellers: [...prevState.travellers, newTraveller],
+        travellers: [...prevState.travellers, passenger],
       }));
   }
 
   deleteTraveller(passenger) {
 	  /*Q5. Write code to delete a passenger from the traveller state variable.*/
     this.setState(prevState => ({
-      travellers: prevState.travellers.filter(traveller => traveller.name !== name),
+      travellers: prevState.travellers.filter(traveller => traveller.name !== passenger),
     }));
   }
   render() {
