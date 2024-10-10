@@ -172,12 +172,9 @@ class Delete extends React.Component {
 }
 
 class Homepage extends React.Component {
-	constructor() {
-	super();
-	}
 
   /*Q6. Visual Representation of reserved/unreserved tickets.*/
-	renderSeatMap() {
+  renderSeatMap() {
     const totalSeats = 10;
     const bookedSeats = this.props.travellers ? this.props.travellers.length : 0;
     const freeSeats = totalSeats - bookedSeats;
@@ -197,14 +194,17 @@ class Homepage extends React.Component {
       </div>
     );
   }
-	 render(){
-	 return (
-	 <div>
-		  {/*Q2. Placeholder for Homepage code that shows free seats visually.*/}
-      {this.renderSeatMap()}
-	 </div>);
-	 }
+
+  render() {
+    return (
+      <div>
+        {/*Q2. Placeholder for Homepage code that shows free seats visually.*/}
+        {this.renderSeatMap()}
+      </div>
+    );
+  }
 }
+  
 class TicketToRide extends React.Component {
   constructor() {
     super();

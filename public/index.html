@@ -12,6 +12,46 @@
   <style>
     table.bordered-table th, td {border: 1px solid silver; padding: 4px;}
     table.bordered-table {border-collapse: collapse;}
+    /* Styling for the seat map */
+    .seat-map {
+      display: grid;
+      grid-template-columns: repeat(8, 40px); /* 8 seats per row */
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .seat {
+      width: 40px;
+      height: 40px;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+    }
+
+    .booked-seat {
+      background-color: grey; /* Grey for booked seats */
+    }
+
+    .free-seat {
+      background-color: green; /* Green for free seats */
+    }
+
+    .legend {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .legend div {
+      display: flex;
+      align-items: center;
+    }
+
+    .legend .color-box {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      border: 1px solid #000;
+    }
   </style>
 </head>
 
