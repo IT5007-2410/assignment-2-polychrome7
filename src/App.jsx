@@ -307,12 +307,16 @@ class TicketToRide extends React.Component {
           <button onClick={() => this.setSelector(3)}>Display Travellers</button>
           <button onClick={() => this.setSelector(4)}>Delete Traveller</button>
 	      </div>
-
-        {/* Q2: Conditional Rendering Based on `selector` */}
+  
         <div>
+          {/* Only one of the below four divisions is rendered based on the button clicked by the user. */}
+          {/* Q2 and Q6. Code to call Instance that draws Homepage. Homepage shows Visual Representation of free seats. */}
           {this.state.selector === 1 && <Homepage travellers={this.state.travellers} />}  {/* Homepage Component */}
+          {/* Q4. Code to call the component that adds a traveller. */}
           {this.state.selector === 2 && <Add bookTraveller={this.bookTraveller} />}  {/* Add Component */}
+          {/* Q3. Code to call component that Displays Travellers. */}
           {this.state.selector === 3 && <Display travellers={this.state.travellers} />}  {/* Display Component */}
+          {/* Q5. Code to call the component that deletes a traveller based on a given attribute. */}
           {this.state.selector === 4 && <Delete deleteTraveller={this.deleteTraveller} />}  {/* Delete Component */}
        </div>
      </div>
