@@ -179,7 +179,8 @@ class Homepage extends React.Component {
   /*Q6. Visual Representation of reserved/unreserved tickets.*/
 	renderSeatMap() {
     const totalSeats = 10;
-    const bookedSeats = this.props.travellers.length;
+    //const bookedSeats = this.props.travellers.length;
+    const bookedSeats = this.props.travellers ? this.props.travellers.length : 0;
     const freeSeats = totalSeats - bookedSeats;
 
     return (
@@ -256,7 +257,7 @@ class TicketToRide extends React.Component {
 
       {/* Q2: Conditional Rendering Based on `selector` */}
       <div>
-        {this.state.selector === 1 && <Homepage />}  {/* Homepage Component */}
+        {this.state.selector === 1 && <Homepage travellers={this.state.travellers} />}  {/* Homepage Component */}
         {this.state.selector === 2 && <Add bookTraveller={this.bookTraveller} />}  {/* Add Component */}
         {this.state.selector === 3 && <Display travellers={this.state.travellers} />}  {/* Display Component */}
         {this.state.selector === 4 && <Delete deleteTraveller={this.deleteTraveller} />}  {/* Delete Component */}
